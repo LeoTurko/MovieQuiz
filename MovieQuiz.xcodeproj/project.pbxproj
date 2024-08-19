@@ -16,6 +16,8 @@
 		BF1968C12BFFC701003A99DC /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */; };
 		BF1968C42BFFCA0E003A99DC /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968C32BFFCA0E003A99DC /* Extension+UIFont.swift */; };
 		BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968C52C00817B003A99DC /* Extension+UIView.swift */; };
+		BF6137F22C7373E9001689D0 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6137F12C7373E9001689D0 /* AlertModel.swift */; };
+		BF6137F42C73745E001689D0 /* AlertPresenterImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6137F32C73745E001689D0 /* AlertPresenterImp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		BF1968C32BFFCA0E003A99DC /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		BF1968C52C00817B003A99DC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		BF6137F12C7373E9001689D0 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		BF6137F32C73745E001689D0 /* AlertPresenterImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterImp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 		BF1968A52BFD07BA003A99DC /* MovieQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				BF6137F02C7373CF001689D0 /* Models */,
 				BF1968BB2BFDF5C1003A99DC /* Presentation */,
 				BF1968BC2BFDF63D003A99DC /* Helpers */,
 				BF1968BA2BFDF567003A99DC /* Resources */,
@@ -86,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				BF1968AA2BFD07BA003A99DC /* MovieQuizViewController.swift */,
+				BF6137F32C73745E001689D0 /* AlertPresenterImp.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -114,6 +120,14 @@
 				BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */,
 			);
 			path = "YS Display";
+			sourceTree = "<group>";
+		};
+		BF6137F02C7373CF001689D0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BF6137F12C7373E9001689D0 /* AlertModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,9 +203,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF1968AB2BFD07BA003A99DC /* MovieQuizViewController.swift in Sources */,
+				BF6137F42C73745E001689D0 /* AlertPresenterImp.swift in Sources */,
 				BF1968A72BFD07BA003A99DC /* AppDelegate.swift in Sources */,
 				BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */,
 				BF1968C42BFFCA0E003A99DC /* Extension+UIFont.swift in Sources */,
+				BF6137F22C7373E9001689D0 /* AlertModel.swift in Sources */,
 				BF1968A92BFD07BA003A99DC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

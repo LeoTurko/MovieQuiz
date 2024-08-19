@@ -9,6 +9,8 @@ import UIKit
 
 class MovieQuizViewController: UIViewController {
   
+  let tableView = UITableView()
+  
   // MARK: - UI-Elements
   private lazy var mainStackView: UIStackView = {
     let element = UIStackView()
@@ -114,6 +116,8 @@ class MovieQuizViewController: UIViewController {
   private var currentQuestionIndex = 0
   private var correctAnswers = 0
   
+  private var alertPresenter: AlertPresenterDelegate?
+  
   private var questions: [QuizQuestion] = [
     QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
     QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
@@ -131,10 +135,8 @@ class MovieQuizViewController: UIViewController {
     super.viewDidLoad()
     setViews()
     setConstraints()
-    
-    let currentQuestion = questions[currentQuestionIndex]
-    let viewModel = convert(model: currentQuestion)
-    show(quiz: viewModel)
+    setDelegates()
+    setFirstQuestion()
   }
 }
 
@@ -173,14 +175,8 @@ extension MovieQuizViewController {
   
   private func show(quiz result: QuizResultsViewModel) {
     
-    let alert = UIAlertController(
-      title: result.title,
-      message: result.text,
-      preferredStyle: .alert)
-    
-    let action = UIAlertAction(title: "Сыграть еще раз?", style: .default) {  [weak self] _ in
+    let alertModel = AlertModel(title: result.title, message: result.text, buttonText: result.buttonText) { [weak self] in
       guard let self else { return }
-      
       self.currentQuestionIndex = 0
       self.correctAnswers = 0
       
@@ -189,9 +185,26 @@ extension MovieQuizViewController {
       self.show(quiz: viewModel)
     }
     
-    alert.addAction(action)
-    
-    self.present(alert, animated: true)
+    alertPresenter?.show(alertModel)
+//    let alert = UIAlertController(
+//      title: result.title,
+//      message: result.text,
+//      preferredStyle: .alert)
+//    
+//    let action = UIAlertAction(title: "Сыграть еще раз?", style: .default) {  [weak self] _ in
+//      guard let self else { return }
+//      
+//      self.currentQuestionIndex = 0
+//      self.correctAnswers = 0
+//      
+//      let firstQuestion = self.questions[self.currentQuestionIndex]
+//      let viewModel = self.convert(model: firstQuestion)
+//      self.show(quiz: viewModel)
+//    }
+//    
+//    alert.addAction(action)
+//    
+//    self.present(alert, animated: true)
   }
   
   private func showAnswerResult(isCorrect: Bool) {
@@ -253,7 +266,7 @@ extension MovieQuizViewController {
   
   func setConstraints() {
     NSLayoutConstraint.activate([
-    // Main Stack
+      // Main Stack
       mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
       mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -271,6 +284,16 @@ extension MovieQuizViewController {
       
       buttonsStack.heightAnchor.constraint(equalToConstant: 60),
     ])
+  }
+  
+  func setDelegates() {
+    alertPresenter = AlertPresenterImp(delegate: self)
+  }
+  
+  func setFirstQuestion() {
+    let currentQuestion = questions[currentQuestionIndex]
+    let viewModel = convert(model: currentQuestion)
+    show(quiz: viewModel)
   }
 }
 
