@@ -113,28 +113,28 @@ class MovieQuizViewController: UIViewController {
   // MARK: - Private Properties
   private var currentQuestionIndex = 0
   private var correctAnswers = 0
+  private let questionsAmount = 10
   
-  private var questions: [QuizQuestion] = [
-    QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-  ]
+  private var alertPresenter: AlertPresenterDelegate?
+  
+  private var questionFactory: QuestionFactoryProtocol?
+  private var currentQuestion: QuizQuestion?
+//  init() {
+//
+//  }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setViews()
     setConstraints()
+    setDelegates()
     
-    let currentQuestion = questions[currentQuestionIndex]
-    let viewModel = convert(model: currentQuestion)
-    show(quiz: viewModel)
+//    let currentQuestion = questions[currentQuestionIndex]
+//    let viewModel = convert(model: currentQuestion)
+//    show(quiz: viewModel)
+    questionFactory = QuestionFactory(delegate: self)
+    questionFactory?.requestNextQuestion()
   }
 }
 
@@ -173,25 +173,22 @@ extension MovieQuizViewController {
   
   private func show(quiz result: QuizResultsViewModel) {
     
-    let alert = UIAlertController(
+    let model = AlertModel(
       title: result.title,
       message: result.text,
-      preferredStyle: .alert)
+      buttonText: result.buttonText,
+      buttonAction: { [weak self] in
+        guard let self else { return }
+        self.currentQuestionIndex = 0
+        self.correctAnswers = 0
+        
+        let firstQuestion = self.questions[self.currentQuestionIndex]
+        let viewModel = self.convert(model: firstQuestion)
+        self.show(quiz: viewModel)
+      }
+    )
     
-    let action = UIAlertAction(title: "Сыграть еще раз?", style: .default) {  [weak self] _ in
-      guard let self else { return }
-      
-      self.currentQuestionIndex = 0
-      self.correctAnswers = 0
-      
-      let firstQuestion = self.questions[self.currentQuestionIndex]
-      let viewModel = self.convert(model: firstQuestion)
-      self.show(quiz: viewModel)
-    }
-    
-    alert.addAction(action)
-    
-    self.present(alert, animated: true)
+    alertPresenter?.show(model: model)
   }
   
   private func showAnswerResult(isCorrect: Bool) {
@@ -253,7 +250,7 @@ extension MovieQuizViewController {
   
   func setConstraints() {
     NSLayoutConstraint.activate([
-    // Main Stack
+      // Main Stack
       mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
       mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -271,6 +268,15 @@ extension MovieQuizViewController {
       
       buttonsStack.heightAnchor.constraint(equalToConstant: 60),
     ])
+  }
+  
+  func setDelegates() {
+    alertPresenter = AlertPresenter(delegate: self)
+  }
+}
+
+extension MovieQuizViewController: QuestionFactoryDelegate {
+  func didReceiveNextQuestion(question: QuizQuestion?) {
   }
 }
 

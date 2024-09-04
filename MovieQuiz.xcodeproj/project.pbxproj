@@ -18,6 +18,8 @@
 		BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968C52C00817B003A99DC /* Extension+UIView.swift */; };
 		BF5157BE2C88A9A0008A1E8F /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157BD2C88A9A0008A1E8F /* AlertPresenter.swift */; };
 		BF5157C12C88A9F5008A1E8F /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157C02C88A9F5008A1E8F /* AlertModel.swift */; };
+		BF5157C42C88B2A9008A1E8F /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157C32C88B2A9008A1E8F /* QuestionFactory.swift */; };
+		BF5157C62C88B425008A1E8F /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157C52C88B425008A1E8F /* Array+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		BF1968C52C00817B003A99DC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		BF5157BD2C88A9A0008A1E8F /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		BF5157C02C88A9F5008A1E8F /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		BF5157C32C88B2A9008A1E8F /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
+		BF5157C52C88B425008A1E8F /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 		BF1968A52BFD07BA003A99DC /* MovieQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				BF5157C22C88B297008A1E8F /* Services */,
 				BF5157BF2C88A9E8008A1E8F /* Models */,
 				BF1968BB2BFDF5C1003A99DC /* Presentation */,
 				BF1968BC2BFDF63D003A99DC /* Helpers */,
@@ -99,6 +104,7 @@
 		BF1968BC2BFDF63D003A99DC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				BF5157C52C88B425008A1E8F /* Array+Extensions.swift */,
 				BF1968C32BFFCA0E003A99DC /* Extension+UIFont.swift */,
 				BF1968C52C00817B003A99DC /* Extension+UIView.swift */,
 			);
@@ -128,6 +134,14 @@
 				BF5157C02C88A9F5008A1E8F /* AlertModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BF5157C22C88B297008A1E8F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BF5157C32C88B2A9008A1E8F /* QuestionFactory.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +216,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF5157C42C88B2A9008A1E8F /* QuestionFactory.swift in Sources */,
+				BF5157C62C88B425008A1E8F /* Array+Extensions.swift in Sources */,
 				BF1968AB2BFD07BA003A99DC /* MovieQuizViewController.swift in Sources */,
 				BF1968A72BFD07BA003A99DC /* AppDelegate.swift in Sources */,
 				BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */,
