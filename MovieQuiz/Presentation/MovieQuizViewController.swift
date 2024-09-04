@@ -9,8 +9,6 @@ import UIKit
 
 class MovieQuizViewController: UIViewController {
   
-  let tableView = UITableView()
-  
   // MARK: - UI-Elements
   private lazy var mainStackView: UIStackView = {
     let element = UIStackView()
@@ -113,23 +111,22 @@ class MovieQuizViewController: UIViewController {
   }()
   
   // MARK: - Private Properties
+  private let questionsAmount = 10
   private var currentQuestionIndex = 0
   private var correctAnswers = 0
   
   private var alertPresenter: AlertPresenterDelegate?
+  private var questionFactory: QuestionFactoryProtocol?
+  private var currentQuestion: QuizQuestion?
   
-  private var questions: [QuizQuestion] = [
-    QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Avengers", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Deadpool", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Green Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
-    QuizQuestion(image: "The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-    QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
-  ]
+  init(questionFactory: QuestionFactoryProtocol) {
+    self.questionFactory = questionFactory
+    QuestionFactory(delegate: self)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -137,13 +134,30 @@ class MovieQuizViewController: UIViewController {
     setConstraints()
     setDelegates()
     setFirstQuestion()
+    
+    questionFactory = QuestionFactory(delegate: self)
+  }
+}
+
+// MARK: - QuestionFactoryDelegate
+extension MovieQuizViewController: QuestionFactoryDelegate {
+  func didReceiveNextQuestion(question: QuizQuestion?) {
+    guard let question else { return }
+    
+    currentQuestion = question
+    let viewModel = convert(model: question)
+    
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
+      self.show(quiz: viewModel)
+    }
   }
 }
 
 // MARK: - Actions
 extension MovieQuizViewController {
   @objc private func noButtonClicked(_ sender: UIButton) { // Проверить
-    let currentQuestion = questions[currentQuestionIndex]
+    guard let currentQuestion = questionFactory.requestNextQuestion() else { return }//questions[currentQuestionIndex]
     let givenAnswer = false
     buttonsIsEnabled(yesButton, noButton)
     
@@ -151,7 +165,7 @@ extension MovieQuizViewController {
   }
   
   @objc private func yesButtonClicked(_ sender: UIButton) { // Проверить
-    let currentQuestion = questions[currentQuestionIndex]
+    guard let currentQuestion = questionFactory.requestNextQuestion() else { return }//questions[currentQuestionIndex]
     let givenAnswer = true
     buttonsIsEnabled(yesButton, noButton)
     
@@ -162,7 +176,7 @@ extension MovieQuizViewController {
     QuizStepViewModel(
       image: UIImage(named: model.image) ?? UIImage(),
       question: model.text,
-      questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)"
+      questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
     )
   }
   
@@ -180,9 +194,7 @@ extension MovieQuizViewController {
       self.currentQuestionIndex = 0
       self.correctAnswers = 0
       
-      let firstQuestion = self.questions[self.currentQuestionIndex]
-      let viewModel = self.convert(model: firstQuestion)
-      self.show(quiz: viewModel)
+      questionFactory?.requestNextQuestion()
     }
     
     alertPresenter?.show(alertModel)
@@ -226,8 +238,10 @@ extension MovieQuizViewController {
   }
   
   private func showNextQuestionOrResult() {
-    if currentQuestionIndex == questions.count - 1 {
-      let text = "Ваш результат: \(correctAnswers)/10"
+    if currentQuestionIndex == questionsAmount - 1 {
+      let text = correctAnswers == questionsAmount 
+      ? "Congrats you answer 10 0f 10!"
+      : "You answer \(correctAnswers) of 10, try more"
       let viewModel = QuizResultsViewModel(
         title: "Этот раунд окончен",
         text: text,
@@ -237,10 +251,7 @@ extension MovieQuizViewController {
     } else {
       currentQuestionIndex += 1
       
-      let nextQuestion = questions[currentQuestionIndex]
-      let viewModel = convert(model: nextQuestion)
-      
-      show(quiz: viewModel)
+      questionFactory?.requestNextQuestion()
     }
   }
   
@@ -291,27 +302,12 @@ extension MovieQuizViewController {
   }
   
   func setFirstQuestion() {
-    let currentQuestion = questions[currentQuestionIndex]
-    let viewModel = convert(model: currentQuestion)
-    show(quiz: viewModel)
+    questionFactory?.requestNextQuestion()
   }
 }
 
-// View Models
-struct QuizQuestion {
-  let image: String
-  let text: String
-  var correctAnswer: Bool
-}
 
-struct QuizStepViewModel {
-  let image: UIImage
-  let question: String
-  let questionNumber: String
-}
 
-struct QuizResultsViewModel {
-  let title: String
-  let text : String
-  let buttonText: String
-}
+
+
+
