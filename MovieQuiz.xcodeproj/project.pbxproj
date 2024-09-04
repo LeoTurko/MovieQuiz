@@ -16,6 +16,8 @@
 		BF1968C12BFFC701003A99DC /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */; };
 		BF1968C42BFFCA0E003A99DC /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968C32BFFCA0E003A99DC /* Extension+UIFont.swift */; };
 		BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1968C52C00817B003A99DC /* Extension+UIView.swift */; };
+		BF5157BE2C88A9A0008A1E8F /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157BD2C88A9A0008A1E8F /* AlertPresenter.swift */; };
+		BF5157C12C88A9F5008A1E8F /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5157C02C88A9F5008A1E8F /* AlertModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		BF1968C32BFFCA0E003A99DC /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		BF1968C52C00817B003A99DC /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		BF5157BD2C88A9A0008A1E8F /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		BF5157C02C88A9F5008A1E8F /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 		BF1968A52BFD07BA003A99DC /* MovieQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				BF5157BF2C88A9E8008A1E8F /* Models */,
 				BF1968BB2BFDF5C1003A99DC /* Presentation */,
 				BF1968BC2BFDF63D003A99DC /* Helpers */,
 				BF1968BA2BFDF567003A99DC /* Resources */,
@@ -86,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				BF1968AA2BFD07BA003A99DC /* MovieQuizViewController.swift */,
+				BF5157BD2C88A9A0008A1E8F /* AlertPresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -114,6 +120,14 @@
 				BF1968BF2BFFC701003A99DC /* YS Display-Medium.ttf */,
 			);
 			path = "YS Display";
+			sourceTree = "<group>";
+		};
+		BF5157BF2C88A9E8008A1E8F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BF5157C02C88A9F5008A1E8F /* AlertModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +206,9 @@
 				BF1968A72BFD07BA003A99DC /* AppDelegate.swift in Sources */,
 				BF1968C62C00817B003A99DC /* Extension+UIView.swift in Sources */,
 				BF1968C42BFFCA0E003A99DC /* Extension+UIFont.swift in Sources */,
+				BF5157C12C88A9F5008A1E8F /* AlertModel.swift in Sources */,
 				BF1968A92BFD07BA003A99DC /* SceneDelegate.swift in Sources */,
+				BF5157BE2C88A9A0008A1E8F /* AlertPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
